@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.MemberVO;
 import com.example.service.MemberService;
+import com.example.util.JScript;
 
 @Controller
 @RequestMapping("/member/*")
@@ -63,7 +66,8 @@ public class MemberController {
 	} //joinFrom
 	
 	@PostMapping("join")
-	public ResponseEntity<String> join(MemberVO memberVO) { 
+	public ResponseEntity<String> join(MemberVO memberVO,
+			String passwdconFrim) { 
 		// 사용자 입력값을 받아와야 하는데 그 내용이 MemberVO에 들어가 있으니까 
 		// 그 각각의 내용들을 모아서 가져올 수 있게 도와줌
 		// ex) id, passwd ... 제대로 가져왔는지 확인 하기 위해선 출력해보면 된다
@@ -89,10 +93,27 @@ public class MemberController {
 		// dbMemberVO가 널값이면 값이 없다는 뜻이니까 
 		// 새로운 id를 만들 수 있다는 말이니 조건문을 통해 
 		// 회원가입을 할수있게 만들어 준다.
-		if (dbMemberVO == null) {
-			
+		// 만약 아이디가 있을 경우에는 새로운 아이디를 만들 수 없으니
+		// 스크립트를 띄우고 다시 회원가입 하는 화면으로 돌아간다.
+		if (dbMemberVO != null) {
+			// 이 내용은 그냥 복사 붙여넣기 하면된다.
+			// 이 내용이 말하는건 스크립트 창을 띄우기 위해서 있다고 
+			// 그렇게 이해 하고 넘어가면 된다.
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+			String str = JScript.back("아이디가 이미 존재합니다.");
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
 		}
 		// 2.비밀번호, 비밀번호 확인 서로 같은지 체크
+		
+		// passwd는 MemberVO안에 들어 있기때문에 따로 안가져와도 되지만,
+		String passwd = memberVO.getPasswd(); 
+		// passwdConFirm은 없기때문에 join괄호 안에 작성해준다.
+		// 그 이후에 조건문을 만들어서 passwd와 passwdconFirm이 
+		// 서로 맞는지 확인하고 아니면 스크립트로 틀렸다고 말해주고
+		// 다시 작성하게끔 한다.
+		
 		
 		// 3.DB에 등록
 		
