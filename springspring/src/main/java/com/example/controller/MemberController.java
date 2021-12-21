@@ -131,13 +131,30 @@ public class MemberController {
 		// 3-1.회원가입 날짜 설정하기
 		memberVO.setRegDate(new Date());
 		// 출력문을 통해서 등록날짜가 들어갔는지 확인
-		System.out.println("memberVO : " + memberVO);
+		System.out.println("memberVO 수정 전: " + memberVO);
 		
 		// 3-2.비밀번호 암호화 -> 외부 라이브러리 이기때문에 이렇게 쓰는게 사용방법
+		// hashpw안에 있는 passwd는 암호화 되지 않은 비밀번호
+		// BCrypt.gensalt()는 얼마나 암호화 시킬건지 정하는거
+		// hashPasswd는 암호화가 완료된 비밀번호
 		String hashPasswd = BCrypt.hashpw(passwd, BCrypt.gensalt());
-		// 4.DB에 등록
+		// memberVO에 암호화된 비밀번호 넣어주기
+		memberVO.setPasswd(hashPasswd);
+		// 수정이 됬는지 확인
+		System.out.println("memberVO 수정 후: " + memberVO);
+		
+		// 4.DB에 등록 -> MemberMapper.java에가서 작성!
+		// MemberService까지 다녀 왔으면 사용가능
+		// 추가 하는 내용은 memberVO에 넣어준다.
+		memberService.insertMember(memberVO);
 		
 		// 5.회원가입완료 메세지 띄우고, 로그인 화면으로 이동
-		return null;
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "text/html; charset=UTF-8");
+		// 완료되었다는 창 띄워주고, 그뒤에 어디로 이동할지를 적어주면 된다.
+		String str = JScript.href("회원가입이 완료되었습니다.", "/member/login");
+
+		return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		
 	} //join
 }

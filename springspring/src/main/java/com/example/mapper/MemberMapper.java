@@ -15,7 +15,12 @@ public interface MemberMapper {
 	// MemberMapper.xml 파일에서 sql문을 작성을 해줘야 한다.
 	// MemberMapper.xml가서 작성하자!
 	MemberVO getMemberById(String id);
+	
 	// =========== insert ===========
+	
+	// 사용자가 입력한 내용을 바탕으로 회원가입 하기위해서
+	// DB에 추가 시키는 메서드 이렇게 쓰고 MemberMapper.xml로 이동!
+	void insertMember(MemberVO memberVO);
 	
 	// =========== update ===========
 	

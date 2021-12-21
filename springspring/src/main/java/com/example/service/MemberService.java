@@ -34,4 +34,10 @@ public class MemberService {
 	public MemberVO getMemberById(String id) {
 		return memberMapper.getMemberById(id);
 	}
+	
+	// void로 만든건 따로 리턴값이 필요가 없다.
+	// 작성이 끝났으면 MemberController로 이동해서 사용하자!
+	public void insertMember(MemberVO memberVO) {
+		memberMapper.insertMember(memberVO);
+	}
 }

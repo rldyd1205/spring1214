@@ -29,7 +29,20 @@
 	</select>
 	
 	<!-- =========== insert =========== -->
-
+	
+	<!-- DB에 단순히 추가하는 것이기 때문에  resultType은 안적어 줘도 된다.
+		 DB에있는 member테이블에 추가하는 것이기 때문에 DB컬럼 그대로 작성 해줘야 함
+	 -->
+	<!-- VALUES에 들어가는 건 MemberVO에 적혀져 있는대로 낙타모양으로 그대로 작성함 
+	 -->
+	<insert id="insertMember">
+		<![CDATA[
+			INSERT INTO member(id, passwd, name, birthday, gender,
+							email, recv_email, reg_date)
+			VALUES (#{id}, #{passwd}, #{name}, #{birthday}, #{gender},
+							#{email}, #{recvEmail}, #{regDate})
+		]]>
+	</insert>
 
 	<!-- =========== update =========== -->
 	
