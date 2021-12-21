@@ -8,7 +8,7 @@ public class HomeController {
 	
 	@GetMapping(value = {"/", "index"})
 	public String home() {
-		System.out.println("home 호출됨");
+		System.out.println("메인페이지 호출완료...");
 		return "index";
 	}
 	
