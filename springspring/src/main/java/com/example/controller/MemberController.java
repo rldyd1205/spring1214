@@ -50,6 +50,7 @@ public class MemberController {
 		return "member/join";
 	} //joinFrom
 	
+	@PostMapping("join")
 	public ResponseEntity<String> join(MemberVO memberVO) { 
 		// 사용자 입력값을 받아와야 하는데 그 내용이 MemberVO에 들어가 있으니까 
 		// 그 각각의 내용들을 모아서 가져올 수 있게 도와줌
