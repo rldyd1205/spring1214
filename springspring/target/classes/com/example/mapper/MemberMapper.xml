@@ -5,8 +5,27 @@
 <mapper namespace="com.example.mapper.MemberMapper">
 
 	<!-- =========== select =========== -->
-	<select id="getMemberById" resultType="MemberVO">
 	
+	<!-- select(조회)작성 
+		 id에는 우리가 MemberMapper.java에서 작성한 메서드 이름을 가져오고
+		 resultType에는 어떤걸로 가져 올거냐를 정해주는 곳인데
+		 우리는 MemberVO로 가져올거기 때문에 MemberVO라고 작성해주면 된다.
+		 mybatis가 우리가 원하는 결과를 모양에 맞춰서 가지고 와준다.
+	-->
+	<!-- SELECT(조회) *(모든것) FROM(어디 테이블에서) 
+		 member(member테이블에서) WHERE(member 테이블에서 어떤거?) 
+		 id(id부분을) #{id}(이거 가져올거다)
+	 -->
+	<!-- 사용하기 위해선 MemberService가 필요하다 
+		 sql문을 다 작성하고 나면 사용할 수 있게끔
+		 MemberServic에 가서 작성하자!
+	 -->
+	<select id="getMemberById" resultType="MemberVO">
+		<![CDATA[
+			SELECT *
+			FROM member
+			WHERE id = #{id}
+		]]>
 	</select>
 	
 	<!-- =========== insert =========== -->

@@ -13,6 +13,7 @@ public interface MemberMapper {
 	// 가져올건 id밖에 없으니까 괄호 안에 String id라고 적어준다
 	// 그리고 명세를 해줘야 하는데 이게 어떤 sql문을 사용하는지
 	// MemberMapper.xml 파일에서 sql문을 작성을 해줘야 한다.
+	// MemberMapper.xml가서 작성하자!
 	MemberVO getMemberById(String id);
 	// =========== insert ===========
 	

@@ -7,11 +7,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.MemberVO;
+import com.example.service.MemberService;
 
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
 	
+	// Spring에게 MemberController에서 MemberService를
+	// 사용하고 싶다고 말해주는 코드이다.
+	// private로 서비스 불러오고, 생성자로 연결시킨다.
+	// 이렇게 작성을 하고 나면 사용이 가능하다.
+	private MemberService memberService;
+	
+	public MemberController(MemberService memberService) {
+		super();
+		this.memberService = memberService;
+	}
+
 	@GetMapping("/login")
 	public String loginFrom() {
 		System.out.println("loginFrom() 호출완료...");
@@ -63,6 +75,23 @@ public class MemberController {
 		// DB에 있는지 확인 하기 위해서 MemberMapper.java에 가서 작성
 		String id = memberVO.getId();
 		
+		// 위에서 MemberService 생성자를 만들었으면,
+		// 내가 원하는 곳에서 필요한 걸 불러와서 
+		// 작성하면 사용할 수 있다.
+		// DB에서 검색해서 나온 결과기 때문에 메서드 이름을
+		// dbMemberVO라고 정해준다.
+		MemberVO dbMemberVO = memberService.getMemberById(id);
+		
+		// 그럼 DB에 값이 있는지 출력문을 통해 확인이 가능하다
+		// 값이 있으면 그 값 내용이 나올 것이고 없으면 null값으로 나온다.
+		System.out.println("dbMemberVO : " + dbMemberVO);
+		
+		// dbMemberVO가 널값이면 값이 없다는 뜻이니까 
+		// 새로운 id를 만들 수 있다는 말이니 조건문을 통해 
+		// 회원가입을 할수있게 만들어 준다.
+		if (dbMemberVO == null) {
+			
+		}
 		// 2.비밀번호, 비밀번호 확인 서로 같은지 체크
 		
 		// 3.DB에 등록
