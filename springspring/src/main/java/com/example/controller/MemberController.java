@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.util.Date;
+
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,7 +70,7 @@ public class MemberController {
 	
 	@PostMapping("join")
 	public ResponseEntity<String> join(MemberVO memberVO,
-			String passwdconFrim) { 
+			String passwdConfirm) { 
 		// 사용자 입력값을 받아와야 하는데 그 내용이 MemberVO에 들어가 있으니까 
 		// 그 각각의 내용들을 모아서 가져올 수 있게 도와줌
 		// ex) id, passwd ... 제대로 가져왔는지 확인 하기 위해선 출력해보면 된다
@@ -112,12 +115,29 @@ public class MemberController {
 		// passwdConFirm은 없기때문에 join괄호 안에 작성해준다.
 		// 그 이후에 조건문을 만들어서 passwd와 passwdconFirm이 
 		// 서로 맞는지 확인하고 아니면 스크립트로 틀렸다고 말해주고
-		// 다시 작성하게끔 한다.
+		// 다시 작성하게끔 한다. 문자끼리 비교할땐 이퀄스를 사용
+		if (passwd.equals(passwdConfirm) == false) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Content-Type", "text/html; charset=UTF-8");
+			String str = JScript.back("비밀번호가 서로 같지 않습니다.");
+
+			return new ResponseEntity<String>(str, headers, HttpStatus.OK);
+		}
 		
+		// 3.아이디 체크 비밀번호 체크까지 모두 통과 했을 때
+		// 출력문을 찍어보면 비밀번호 암호화 안되어 있고,
+		// regDate(등록날짜)가 없기때문에 만들어 준다.
 		
-		// 3.DB에 등록
+		// 3-1.회원가입 날짜 설정하기
+		memberVO.setRegDate(new Date());
+		// 출력문을 통해서 등록날짜가 들어갔는지 확인
+		System.out.println("memberVO : " + memberVO);
 		
-		// 4.회원가입완료 메세지 띄우고, 로그인 화면으로 이동
+		// 3-2.비밀번호 암호화 -> 외부 라이브러리 이기때문에 이렇게 쓰는게 사용방법
+		String hashPasswd = BCrypt.hashpw(passwd, BCrypt.gensalt());
+		// 4.DB에 등록
+		
+		// 5.회원가입완료 메세지 띄우고, 로그인 화면으로 이동
 		return null;
 	} //join
 }
