@@ -5,7 +5,9 @@
 <mapper namespace="com.example.mapper.MemberMapper">
 
 	<!-- =========== select =========== -->
-
+	<select id="getMemberById" resultType="MemberVO">
+	
+	</select>
 	
 	<!-- =========== insert =========== -->
 
