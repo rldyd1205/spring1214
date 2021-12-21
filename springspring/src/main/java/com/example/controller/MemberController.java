@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.MemberVO;
+
 @Controller
 @RequestMapping("/member/*")
 public class MemberController {
@@ -15,12 +17,6 @@ public class MemberController {
 		System.out.println("loginFrom() 호출완료...");
 		return "member/login";
 	} //loginFrom
-	
-	@GetMapping("/join")
-	public String joinFrom() {
-		System.out.println("joinFrom() 호출완료...");
-		return "member/join";
-	} //joinFrom
 	
 	// 기능구현을 하기 위해서 PostMapping을 사용함.
 	// 괄호안에 "/login"쓰는 이유는 login페이지의 기능을 구현하기 위함.
@@ -42,7 +38,24 @@ public class MemberController {
 		// 3.로그인 유지 체크
 		
 		// 4.세션등록
+		
+		// 5.로그인 성공 메세지 띄우고, 메인화면으로 이동
 
 		return null;
 	} //login
+	
+	@GetMapping("/join")
+	public String joinFrom() {
+		System.out.println("joinFrom() 호출완료...");
+		return "member/join";
+	} //joinFrom
+	
+	public ResponseEntity<String> join(MemberVO memberVO) { 
+		// 사용자 입력값을 받아와야 하는데 그 내용이 MemberVO에 들어가 있으니까 
+		// 그 각각의 내용들을 모아서 가져올 수 있게 도와줌
+		// ex) id, passwd ... 제대로 가져왔는지 확인 하기 위해선 출력해보면 된다
+		System.out.println("MemberVO : " + memberVO);
+		
+		return null;
+	} //join
 }
