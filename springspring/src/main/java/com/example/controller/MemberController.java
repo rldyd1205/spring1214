@@ -112,8 +112,8 @@ public class MemberController {
 		
 		// passwd는 MemberVO안에 들어 있기때문에 따로 안가져와도 되지만,
 		String passwd = memberVO.getPasswd(); 
-		// passwdConFirm은 없기때문에 join괄호 안에 작성해준다.
-		// 그 이후에 조건문을 만들어서 passwd와 passwdconFirm이 
+		// passwdConfirm은 없기때문에 join괄호 안에 작성해준다.
+		// 그 이후에 조건문을 만들어서 passwd와 passwdConfirm이 
 		// 서로 맞는지 확인하고 아니면 스크립트로 틀렸다고 말해주고
 		// 다시 작성하게끔 한다. 문자끼리 비교할땐 이퀄스를 사용
 		if (passwd.equals(passwdConfirm) == false) {
